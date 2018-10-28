@@ -2,10 +2,12 @@
 import com.google.gson.GsonBuilder
 import com.opencsv.CSVReader
 import com.opencsv.CSVReaderBuilder
+import model.Attendance
+import model.AttendanceType.*
+import model.PotentialPlayDate
 import java.io.BufferedReader
 import java.io.FileReader
 import java.io.IOException
-
 
 
 fun main(args: Array<String>?) {
@@ -29,6 +31,42 @@ fun main(args: Array<String>?) {
             println(s)
         }
 
+        val players = HashMap<Int, String>()
+        val potentialPlayDates = mutableListOf<PotentialPlayDate>()
+        records[0].forEachIndexed { i, s ->
+            players[i] = s
+        }
+        records.removeAt(0)
+        records.forEach {
+            val date = it[0]
+            val attendances = mutableListOf<Attendance>()
+            for (i in 1 until it.size) {
+                val a = players[i]?.let { it1 ->
+                    Attendance(it1, when {
+                        it[i] == "0" -> {
+                            Cannot
+                        }
+                        it[i] == "1" -> {
+                            Can
+                        }
+                        it[i] == "0.5" -> {
+                            Maybe
+                        }
+                        else -> {
+                            Cannot
+                        }
+                    })
+                }
+                a?.let { it1 -> attendances.add(it1) }
+            }
+            potentialPlayDates.add(PotentialPlayDate(date, attendances))
+        }
+
+        val gson = GsonBuilder().setPrettyPrinting().create()
+        val json = gson.toJson(potentialPlayDates)
+        println(json)
+
+
         val listOfDates = mutableListOf<MutableList<String>>()
         for (i in 1 until records[0].size) {
             listOfDates.add(mutableListOf(records[0][i]))
@@ -44,11 +82,11 @@ fun main(args: Array<String>?) {
                 }
             }
         }
-        listOfDates.forEach { println(it) }
+        //listOfDates.forEach { println(it) }
 
-        val gson = GsonBuilder().setPrettyPrinting().create()
-        val json = gson.toJson(listOfDates)
-        println(json)
+//        val gson = GsonBuilder().setPrettyPrinting().create()
+//        val json = gson.toJson(listOfDates)
+//        //println(json)
 
     } catch (e: Exception) {
         println("Reading CSV Error!")
