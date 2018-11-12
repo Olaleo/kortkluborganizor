@@ -3,6 +3,7 @@ import com.google.gson.GsonBuilder
 import com.opencsv.CSVReader
 import com.opencsv.CSVReaderBuilder
 import model.Attendance
+import model.AttendanceType
 import model.AttendanceType.*
 import model.PotentialPlayDate
 import java.io.BufferedReader
@@ -32,7 +33,7 @@ fun main(args: Array<String>?) {
         }
 
         val players = HashMap<Int, String>()
-        val potentialPlayDates = mutableListOf<PotentialPlayDate>()
+        var potentialPlayDates = mutableListOf<PotentialPlayDate>()
         records[0].forEachIndexed { i, s ->
             players[i] = s
         }
@@ -61,6 +62,12 @@ fun main(args: Array<String>?) {
             }
             potentialPlayDates.add(PotentialPlayDate(date, attendances))
         }
+        potentialPlayDates.forEach { it.attendances = it.attendances.filter { it.type != AttendanceType.Cannot } }
+        potentialPlayDates = potentialPlayDates.filter { it.attendances.size >= 4 }.toMutableList()
+
+        val actualPlayDates = potentialPlayDates.filter { it.attendances.size == 4 }.toMutableList()
+        potentialPlayDates.removeAll(actualPlayDates)
+
 
         val gson = GsonBuilder().setPrettyPrinting().create()
         val json = gson.toJson(potentialPlayDates)
