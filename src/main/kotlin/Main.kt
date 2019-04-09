@@ -1,3 +1,4 @@
+
 import com.opencsv.CSVReader
 import com.opencsv.CSVReaderBuilder
 import model.Attendance
@@ -7,7 +8,9 @@ import model.PotentialPlayDate
 import model.playDatesPerPlayer
 import java.io.BufferedReader
 import java.io.FileReader
+import java.io.FileWriter
 import java.io.IOException
+import java.util.*
 
 
 fun main(args: Array<String>?) {
@@ -74,14 +77,18 @@ fun main(args: Array<String>?) {
         potentialPlayDates.forEach {
 
             val weightedPlayers = actualPlayDates.playDatesPerPlayer()
+            val reservePlayers = mutableListOf<String>()
             while (it.attendances.size > 4) {
+
                 if (it.attendances.removeIf { it.name == weightedPlayers.last().first }) {
-                    break
+                    reservePlayers.add(weightedPlayers.last().first)
                 } else {
-                    it.attendances.removeIf { it.name == weightedPlayers[weightedPlayers.size - 2].first }
+                    if (it.attendances.removeIf { it.name == weightedPlayers[weightedPlayers.size - 2].first }) {
+                        reservePlayers.add(weightedPlayers[weightedPlayers.size - 2].first)
+                    }
                 }
             }
-            actualPlayDates.add(PlayDate(it.date, it.attendances.map { it.name }, listOf()))
+            actualPlayDates.add(PlayDate(it.date, it.attendances.map { it.name }, reservePlayers))
         }
 
 //        val gson = GsonBuilder().setPrettyPrinting().create()
@@ -91,25 +98,33 @@ fun main(args: Array<String>?) {
 //        println(json2)
 
 
-        actualPlayDates.forEach { println(it.date + "    |   " + it.players) }
+        actualPlayDates.forEach { println(it.date + "    |   " + it.players + "     |   " + it.potentialPlayers) }
 
 
-//        val listOfDates = mutableListOf<MutableList<String>>()
-//        for (i in 1 until records[0].size) {
-//            listOfDates.add(mutableListOf(records[0][i]))
-//        }
-//        for (i in 1 until records.size) {
-//            records[i].forEachIndexed { index, s ->
-//                if (s != "0" && s.length == 1) {
-//                    listOfDates[index - 1].add(records[i][0])
-//                }
-//            }
-//        }
-        //listOfDates.forEach { println(it) }
 
-//        val gson = GsonBuilder().setPrettyPrinting().create()
-//        val json = gson.toJson(listOfDates)
-//        //println(json)
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+        val fileWriter = FileWriter(args[0].split(".")[0] + "OUTPUT" + ".csv")
+
+        
+
 
     } catch (e: Exception) {
         println("Reading CSV Error!")
@@ -124,3 +139,4 @@ fun main(args: Array<String>?) {
         }
     }
 }
+
