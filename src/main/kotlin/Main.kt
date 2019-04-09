@@ -1,11 +1,10 @@
-
-import com.google.gson.GsonBuilder
 import com.opencsv.CSVReader
 import com.opencsv.CSVReaderBuilder
 import model.Attendance
-import model.AttendanceType
 import model.AttendanceType.*
+import model.PlayDate
 import model.PotentialPlayDate
+import model.playDatesPerPlayer
 import java.io.BufferedReader
 import java.io.FileReader
 import java.io.IOException
@@ -62,33 +61,50 @@ fun main(args: Array<String>?) {
             }
             potentialPlayDates.add(PotentialPlayDate(date, attendances))
         }
-        potentialPlayDates.forEach { it.attendances = it.attendances.filter { it.type != AttendanceType.Cannot } }
-        potentialPlayDates = potentialPlayDates.filter { it.attendances.size >= 4 }.toMutableList()
-
-        val actualPlayDates = potentialPlayDates.filter { it.attendances.size == 4 }.toMutableList()
-        potentialPlayDates.removeAll(actualPlayDates)
-
-
-        val gson = GsonBuilder().setPrettyPrinting().create()
-        val json = gson.toJson(potentialPlayDates)
-        println(json)
-
-
-        val listOfDates = mutableListOf<MutableList<String>>()
-        for (i in 1 until records[0].size) {
-            listOfDates.add(mutableListOf(records[0][i]))
+        potentialPlayDates.forEach {
+            it.attendances = it.attendances.filter { it.type != Cannot }.toMutableList()
+            potentialPlayDates = potentialPlayDates.filter { it.attendances.size >= 4 }.toMutableList()
         }
-        for (i in 1 until records.size) {
-            records[i].forEachIndexed { index, s ->
-                if (s != "0" && s.length == 1) {
-                    listOfDates[index - 1]
-                            .add(
-                                    records
-                                            [i]
-                                            [0])
+
+        val actualPlayDates = potentialPlayDates.filter { it.attendances.size == 4 }.map { PlayDate(it.date, it.attendances.map { it.name }, listOf()) }.toMutableList()
+
+        potentialPlayDates.removeIf { actualPlayDates.map { it.date }.contains(it.date) }
+
+
+        potentialPlayDates.forEach {
+
+            val weightedPlayers = actualPlayDates.playDatesPerPlayer()
+            while (it.attendances.size > 4) {
+                if (it.attendances.removeIf { it.name == weightedPlayers.last().first }) {
+                    break
+                } else {
+                    it.attendances.removeIf { it.name == weightedPlayers[weightedPlayers.size - 2].first }
                 }
             }
+            actualPlayDates.add(PlayDate(it.date, it.attendances.map { it.name }, listOf()))
         }
+
+//        val gson = GsonBuilder().setPrettyPrinting().create()
+//        val json = gson.toJson(potentialPlayDates)
+//        println(json)
+//        val json2 = gson.toJson(actualPlayDates)
+//        println(json2)
+
+
+        actualPlayDates.forEach { println(it.date + "    |   " + it.players) }
+
+
+//        val listOfDates = mutableListOf<MutableList<String>>()
+//        for (i in 1 until records[0].size) {
+//            listOfDates.add(mutableListOf(records[0][i]))
+//        }
+//        for (i in 1 until records.size) {
+//            records[i].forEachIndexed { index, s ->
+//                if (s != "0" && s.length == 1) {
+//                    listOfDates[index - 1].add(records[i][0])
+//                }
+//            }
+//        }
         //listOfDates.forEach { println(it) }
 
 //        val gson = GsonBuilder().setPrettyPrinting().create()

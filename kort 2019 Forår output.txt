@@ -1,0 +1,15 @@
+12/1/2014    |   Mette, Mulle, Kristin, Tove M
+19/1/2014    |   Mette, Kristin, Tove H, Tove M
+26/1/2014    |   Mette, Mulle, Tove H, Tove M
+02/2/2014    |   Mette, Mulle, Sus, Tove H
+02/3/2014    |   Mette, Sus, Tove H, Tove M
+23/3/2014    |   Mulle, Sus, Kristin, Tove M
+27/4/2014    |   Mette, Sus, Kristin, Tove M
+25/5/2014    |   Mette, Kristin, Tove H, Tove M
+15/6/2014    |   Mette, Mulle, Kristin, Tove H
+23/2/2014    |   Mulle, Sus, Kristin, Tove H
+09/3/2014    |   Mulle, Sus, Tove H, Tove M
+16/3/2014    |   Mulle, Sus, Kristin, Tove H
+30/3/2014    |   Mette, Mulle, Kristin, Tove M
+06/4/2014    |   Mette, Sus, Kristin, Tove H
+22/6/2014    |   Mette, Mulle, Sus, Kristin, Tove M
