@@ -1,11 +1,7 @@
-
 import com.opencsv.CSVReader
 import com.opencsv.CSVReaderBuilder
-import model.Attendance
+import model.*
 import model.AttendanceType.*
-import model.PlayDate
-import model.PotentialPlayDate
-import model.playDatesPerPlayer
 import java.io.BufferedReader
 import java.io.FileReader
 import java.io.FileWriter
@@ -88,7 +84,13 @@ fun main(args: Array<String>?) {
                     }
                 }
             }
-            actualPlayDates.add(PlayDate(it.date, it.attendances.map { it.name }, reservePlayers))
+            actualPlayDates.add(PlayDate(it.date, it.attendances.map { it.name }, reservePlayers.reversed()))
+        }
+
+        val playTimes = actualPlayDates.players().associate { s ->
+            var counter = 0
+            counter = actualPlayDates.filter { it.players.contains(s) }.size
+            Pair(s, counter)
         }
 
 //        val gson = GsonBuilder().setPrettyPrinting().create()
@@ -98,32 +100,40 @@ fun main(args: Array<String>?) {
 //        println(json2)
 
 
-        actualPlayDates.forEach { println(it.date + "    |   " + it.players + "     |   " + it.potentialPlayers) }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
         val fileWriter = FileWriter(args[0].split(".")[0] + "OUTPUT" + ".csv")
 
-        
+        val CSV_HEADER = "date,player1,player2,player3,player4,player5?,player6?"
+
+        fileWriter.append(CSV_HEADER)
+        fileWriter.append('\n')
+
+        for (playDate in actualPlayDates) {
+            fileWriter.append(playDate.date)
+            fileWriter.append(',')
+            playDate.players.forEach {
+                fileWriter.append(it)
+                fileWriter.append(',')
+            }
+            playDate.potentialPlayers.forEach {
+                fileWriter.append(it)
+                fileWriter.append(',')
+            }
+            fileWriter.append('\n')
+        }
+        fileWriter.append('\n')
+        fileWriter.append('\n')
+
+        playTimes.forEach { t, u ->
+            fileWriter.append(t)
+            fileWriter.append(',')
+            fileWriter.append(u.toString())
+            fileWriter.append('\n')
+
+        }
+
+
+        fileWriter.flush()
+        fileWriter.close()
 
 
     } catch (e: Exception) {

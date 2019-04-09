@@ -1,0 +1,25 @@
+date,player1,player2,player3,player4,player5?,player6?
+20/1/2019,Mette,Kristin,Tove H,Tove M,
+27/1/2019,Mette,Kristin,Tove H,Tove M,
+17/2/2019,Mette,Sus,Kristin,Tove H,
+24/2/2019,Mette,Mulle,Kristin,Tove M,
+3/3/2019,Mette,Sus,Kristin,Tove H,
+10/3/2019,Mette,Sus,Kristin,Tove H,
+17/3/2019,Mette,Mulle,Kristin,Tove H,
+24/3/2019,Mette,Mulle,Sus,Tove M,
+7/4/2019,Mette,Kristin,Tove H,Tove M,
+5/5/2019,Mulle,Kristin,Tove H,Tove M,
+2/6/2019,Sus,Kristin,Tove H,Tove M,
+30/6/2019,Sus,Kristin,Tove H,Tove M,
+7/7/2019,Mette,Mulle,Kristin,Tove H,
+3/2/2019,Mette,Mulle,Sus,Tove M,Kristin,
+31/3/2019,Mulle,Sus,Tove H,Tove M,Kristin,
+12/5/2019,Mulle,Sus,Kristin,Tove M,Tove H,
+
+
+Mette,11
+Kristin,13
+Tove H,12
+Tove M,11
+Sus,9
+Mulle,8
