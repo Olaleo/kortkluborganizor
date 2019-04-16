@@ -1,6 +1,6 @@
 package model
 
-class PlayDate(val date: String, val players: List<String>, val potentialPlayers: List<String>) {
+class PlayDate(val date: String, val week: Int, val players: List<String>, val potentialPlayers: List<String>) {
 }
 
 

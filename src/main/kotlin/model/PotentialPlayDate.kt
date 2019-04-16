@@ -1,4 +1,4 @@
 package model
 
-data class PotentialPlayDate(val date : String, var attendances: MutableList<Attendance>) {
+data class PotentialPlayDate(val date: String, val week: Int, var attendances: MutableList<Attendance>) {
 }

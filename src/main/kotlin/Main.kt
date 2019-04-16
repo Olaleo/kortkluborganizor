@@ -38,8 +38,9 @@ fun main(args: Array<String>?) {
         records.removeAt(0)
         records.forEach {
             val date = it[0]
+            val week = it[1].toInt()
             val attendances = mutableListOf<Attendance>()
-            for (i in 1 until it.size) {
+            for (i in 2 until it.size) {
                 val a = players[i]?.let { it1 ->
                     Attendance(it1, when {
                         it[i] == "0" -> {
@@ -58,14 +59,14 @@ fun main(args: Array<String>?) {
                 }
                 a?.let { it1 -> attendances.add(it1) }
             }
-            potentialPlayDates.add(PotentialPlayDate(date, attendances))
+            potentialPlayDates.add(PotentialPlayDate(date, week, attendances))
         }
         potentialPlayDates.forEach {
             it.attendances = it.attendances.filter { it.type != Cannot }.toMutableList()
             potentialPlayDates = potentialPlayDates.filter { it.attendances.size >= 4 }.toMutableList()
         }
 
-        val actualPlayDates = potentialPlayDates.filter { it.attendances.size == 4 }.map { PlayDate(it.date, it.attendances.map { it.name }, listOf()) }.toMutableList()
+        val actualPlayDates = potentialPlayDates.filter { it.attendances.size == 4 }.map { PlayDate(it.date, it.week, it.attendances.map { it.name }, listOf()) }.toMutableList()
 
         potentialPlayDates.removeIf { actualPlayDates.map { it.date }.contains(it.date) }
 
@@ -84,7 +85,7 @@ fun main(args: Array<String>?) {
                     }
                 }
             }
-            actualPlayDates.add(PlayDate(it.date, it.attendances.map { it.name }, reservePlayers.reversed()))
+            actualPlayDates.add(PlayDate(it.date, it.week, it.attendances.map { it.name }, reservePlayers.reversed()))
         }
 
         val playTimes = actualPlayDates.players().associate { s ->
@@ -93,22 +94,19 @@ fun main(args: Array<String>?) {
             Pair(s, counter)
         }
 
-//        val gson = GsonBuilder().setPrettyPrinting().create()
-//        val json = gson.toJson(potentialPlayDates)
-//        println(json)
-//        val json2 = gson.toJson(actualPlayDates)
-//        println(json2)
-
+        actualPlayDates.sortBy { it.week }
 
         val fileWriter = FileWriter(args[0].split(".")[0] + "OUTPUT" + ".csv")
 
-        val CSV_HEADER = "date,player1,player2,player3,player4,player5?,player6?"
+        val CSV_HEADER = "date,week,player1,player2,player3,player4,player5?,player6?"
 
         fileWriter.append(CSV_HEADER)
         fileWriter.append('\n')
 
         for (playDate in actualPlayDates) {
             fileWriter.append(playDate.date)
+            fileWriter.append(',')
+            fileWriter.append(playDate.week.toString())
             fileWriter.append(',')
             playDate.players.forEach {
                 fileWriter.append(it)
@@ -130,8 +128,7 @@ fun main(args: Array<String>?) {
             fileWriter.append('\n')
 
         }
-
-
+        
         fileWriter.flush()
         fileWriter.close()
 
