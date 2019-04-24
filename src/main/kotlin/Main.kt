@@ -88,17 +88,50 @@ fun main(args: Array<String>?) {
             actualPlayDates.add(PlayDate(it.date, it.week, it.attendances.map { it.name }, reservePlayers.reversed()))
         }
 
+
+
+        actualPlayDates.sortBy { it.week }
+
+
+        while (true) {
+            var index = -1
+            for (actualPlayDate in actualPlayDates) {
+                if (actualPlayDates.indexOf(actualPlayDate) == 0 || actualPlayDate.week - actualPlayDates[actualPlayDates.indexOf(actualPlayDate) - 1].week > 2) {
+
+                } else {
+                    index = actualPlayDates.indexOf(actualPlayDate)
+                    break
+                }
+            }
+            if (index == -1) {
+                break
+            } else {
+                actualPlayDates.removeAt(index)
+                index = -1
+            }
+        }
+
+
+//        actualPlayDates.mapIndexed { index, playDate ->
+//            when {
+//                -> {
+//                    null
+//                }
+//                -> index
+//                else -> {
+//                    null
+//                }
+//            }
+//        }
+        val fileWriter = FileWriter(args[0].split(".")[0] + "OUTPUT" + ".csv")
+
+        val CSV_HEADER = "date,week,player1,player2,player3,player4,player5?,player6?"
+
         val playTimes = actualPlayDates.players().associate { s ->
             var counter = 0
             counter = actualPlayDates.filter { it.players.contains(s) }.size
             Pair(s, counter)
         }
-
-        actualPlayDates.sortBy { it.week }
-
-        val fileWriter = FileWriter(args[0].split(".")[0] + "OUTPUT" + ".csv")
-
-        val CSV_HEADER = "date,week,player1,player2,player3,player4,player5?,player6?"
 
         fileWriter.append(CSV_HEADER)
         fileWriter.append('\n')
@@ -128,7 +161,7 @@ fun main(args: Array<String>?) {
             fileWriter.append('\n')
 
         }
-        
+
         fileWriter.flush()
         fileWriter.close()
 
