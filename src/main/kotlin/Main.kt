@@ -8,7 +8,6 @@ import java.io.FileWriter
 import java.io.IOException
 import java.util.*
 
-
 fun main(args: Array<String>?) {
 
     println(args!![0])
@@ -112,17 +111,16 @@ fun main(args: Array<String>?) {
         }
 
 
-//        actualPlayDates.mapIndexed { index, playDate ->
-//            when {
-//                -> {
-//                    null
-//                }
-//                -> index
-//                else -> {
-//                    null
-//                }
-//            }
-//        }
+
+        while (actualPlayDates.numberOfPotentialHostings().values.filter { it != 0 }.isNotEmpty()){
+            val potential = actualPlayDates.numberOfPotentialHostings()
+            val actual = actualPlayDates.numberOfHostings()
+            val allowedToHost = actual.
+        }
+
+
+
+
         val fileWriter = FileWriter(args[0].split(".")[0] + "OUTPUT" + ".csv")
 
         val CSV_HEADER = "date,week,player1,player2,player3,player4,player5?,player6?"
@@ -165,7 +163,6 @@ fun main(args: Array<String>?) {
         fileWriter.flush()
         fileWriter.close()
 
-
     } catch (e: Exception) {
         println("Reading CSV Error!")
         e.printStackTrace()
@@ -179,4 +176,3 @@ fun main(args: Array<String>?) {
         }
     }
 }
-
