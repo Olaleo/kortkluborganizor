@@ -13,8 +13,11 @@ fun MutableList<PlayDate>.playDatesPerPlayer(): List<Pair<String, Int>> {
 }
 
 fun MutableList<PlayDate>.players(): List<String> {
-    val list = mutableListOf<Pair<String, Int>>()
     return this.flatMap { it.players }.associate { Pair(it, 0) }.keys.toList()
+}
+
+fun MutableList<PlayDate>.hostList(): List<String> {
+    return this.map { it.host }
 }
 
 fun MutableList<PlayDate>.numberOfPotentialHostings(): MutableMap<String, Int> {

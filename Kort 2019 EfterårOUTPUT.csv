@@ -1,0 +1,21 @@
+date,week,Host,player1,player2,player3,player4,player5?,player6?
+1/9 2019,35,Mette,Mette,Mulle,Kristin,Tove H,
+29/9 2019,39,Tove H,Mette,Sus,Tove H,Tove M,
+20/10 2019,42,Kristin,Mette,Kristin,Tove H,Tove M,
+10/11 2019,45,Mulle,Mulle,Sus,Kristin,Tove M,Mette,Tove H,
+1/12 2019,48,Tove M,Mette,Kristin,Tove H,Tove M,
+
+
+Mette,4
+Mulle,2
+Kristin,4
+Tove H,4
+Sus,2
+Tove M,4
+
+
+Mette,1
+Tove H,1
+Kristin,1
+Mulle,1
+Tove M,1

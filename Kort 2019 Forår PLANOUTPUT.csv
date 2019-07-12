@@ -1,14 +1,8 @@
 date,week,player1,player2,player3,player4,player5?,player6?
-3/2/2019,3/2/2019,Mulle,Sus,Kristin,Tove M,
-5/5/2019,5/5/2019,Mulle,Kristin,Tove H,Tove M,
-2/6/2019,2/6/2019,Sus,Kristin,Tove H,Tove M,
-30/6/2019,30/6/2019,Sus,Kristin,Tove H,Tove M,
-31/3/2019,31/3/2019,Mulle,Sus,Kristin,Tove H,Tove M,
-12/5/2019,12/5/2019,Mulle,Sus,Tove H,Tove M,Kristin,
+5/5/2019,0,Mulle,Kristin,Tove H,Tove M,
 
 
-Mulle,4
-Sus,5
-Kristin,5
-Tove M,5
-Tove H,5
+Mulle,1
+Kristin,1
+Tove H,1
+Tove M,1

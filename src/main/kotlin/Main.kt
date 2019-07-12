@@ -112,25 +112,41 @@ fun main(args: Array<String>?) {
 
 
 
-        while (actualPlayDates.numberOfPotentialHostings().values.filter { it != 0 }.isNotEmpty()){
-            val potential = actualPlayDates.numberOfPotentialHostings()
-            val actual = actualPlayDates.numberOfHostings()
-            val allowedToHost = actual.
+        for (playdate in actualPlayDates) {
+            val potHosts = playdate.players.toMutableList()
+            val numberOfHostings = actualPlayDates.numberOfHostings()
+            while (true) {
+                val potHost = numberOfHostings.toList().minBy { it.second }?.first
+                if (potHosts.contains(potHost)) {
+                    playdate.host = potHost!!
+                    break
+                } else {
+                    numberOfHostings.remove(potHost)
+                }
+            }
         }
 
+//        while (actualPlayDates.numberOfPotentialHostings().values.any { it != 0 }){
+//            val potential = actualPlayDates.numberOfPotentialHostings()
+//            val actual = actualPlayDates.numberOfHostings()
+//
+//            val allowedToHost = actual.
+//        }
 
+        val playTimes = actualPlayDates.players().associate { s ->
+            val counter: Int = actualPlayDates.filter { it.players.contains(s) }.size
+            Pair(s, counter)
+        }
+
+        val hostTimes = actualPlayDates.hostList().associate { s ->
+            val counter: Int = actualPlayDates.filter { it.host == s }.size
+            Pair(s, counter)
+        }
 
 
         val fileWriter = FileWriter(args[0].split(".")[0] + "OUTPUT" + ".csv")
 
-        val CSV_HEADER = "date,week,player1,player2,player3,player4,player5?,player6?"
-
-        val playTimes = actualPlayDates.players().associate { s ->
-            var counter = 0
-            counter = actualPlayDates.filter { it.players.contains(s) }.size
-            Pair(s, counter)
-        }
-
+        val CSV_HEADER = "date,week,Host,player1,player2,player3,player4,player5?,player6?"
         fileWriter.append(CSV_HEADER)
         fileWriter.append('\n')
 
@@ -138,6 +154,8 @@ fun main(args: Array<String>?) {
             fileWriter.append(playDate.date)
             fileWriter.append(',')
             fileWriter.append(playDate.week.toString())
+            fileWriter.append(',')
+            fileWriter.append(playDate.host)
             fileWriter.append(',')
             playDate.players.forEach {
                 fileWriter.append(it)
@@ -157,8 +175,19 @@ fun main(args: Array<String>?) {
             fileWriter.append(',')
             fileWriter.append(u.toString())
             fileWriter.append('\n')
-
         }
+
+        fileWriter.append('\n')
+        fileWriter.append('\n')
+
+        hostTimes.forEach { t, u ->
+            fileWriter.append(t)
+            fileWriter.append(',')
+            fileWriter.append(u.toString())
+            fileWriter.append('\n')
+        }
+
+
 
         fileWriter.flush()
         fileWriter.close()

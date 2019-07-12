@@ -1,11 +1,11 @@
-date,week,player1,player2,player3,player4,player5?,player6?
-20/1/2019,3,Mette,Kristin,Tove H,Tove M,
-17/2/2019,7,Mette,Sus,Kristin,Tove H,
-10/3/2019,10,Mette,Sus,Kristin,Tove H,
-31/3/2019,13,Mulle,Sus,Tove H,Tove M,Kristin,
-5/5/2019,18,Mulle,Kristin,Tove H,Tove M,
-2/6/2019,22,Sus,Kristin,Tove H,Tove M,
-30/6/2019,26,Sus,Kristin,Tove H,Tove M,
+date,week,Host,player1,player2,player3,player4,player5?,player6?
+20/1/2019,3,Mette,Mette,Kristin,Tove H,Tove M,
+17/2/2019,7,Kristin,Mette,Sus,Kristin,Tove H,
+10/3/2019,10,Tove H,Mette,Sus,Kristin,Tove H,
+31/3/2019,13,Tove M,Mulle,Sus,Tove H,Tove M,Kristin,
+5/5/2019,18,Mulle,Mulle,Kristin,Tove H,Tove M,
+2/6/2019,22,Sus,Sus,Kristin,Tove H,Tove M,
+30/6/2019,26,Kristin,Sus,Kristin,Tove H,Tove M,
 
 
 Mette,3
@@ -14,3 +14,11 @@ Tove H,7
 Tove M,5
 Sus,5
 Mulle,2
+
+
+Mette,1
+Kristin,2
+Tove H,1
+Tove M,1
+Mulle,1
+Sus,1
